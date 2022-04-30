@@ -7,7 +7,7 @@ private:
     unsigned int vertexCount;
     unsigned int edgeCount;
     Edge* edges;
-    List* vertexes;
+    List<Edge>* vertexes;
 public:
     Graph(unsigned int vertexCount, unsigned int edgeCount, Edge* edges):vertexCount(vertexCount), edgeCount(edgeCount){}
     ~Graph();

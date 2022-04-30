@@ -1,4 +1,6 @@
 
+template <typename E>
+
 class List
 {
 private:
