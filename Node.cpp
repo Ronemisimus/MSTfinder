@@ -2,8 +2,8 @@
 
 template class Node<int>;
 template std::ostream& operator<< (std::ostream& out, Node<int>& node);
-//template class Node<Edge>;
-//template std::ostream& operator<< (std::ostream& out, Node<Edge>& node);
+template class Node<Edge*>;
+template std::ostream& operator<< (std::ostream& out, Node<Edge*>& node);
 
 template <typename E>
 std::ostream& operator<< (std::ostream& out, Node<E>& node)
