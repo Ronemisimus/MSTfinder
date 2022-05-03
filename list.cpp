@@ -9,15 +9,11 @@ template std::ostream& operator<< (std::ostream& out, List<TYPE>& list);
 template <typename E>
 Node<E>* List<E>::addData(E& data, Node<E>* brotherNode)
 {
-    Node<E>* res = new Node<E>;
-    res->data=data;
-    res->brotherNode = brotherNode;
-    res->next = nullptr;
-    res->prev = nullptr;
+    Node<E>* res = new Node<E>(data,nullptr,nullptr,brotherNode);
     if(this->head)
     {
-        res->next = this->head;
-        this->head->prev = res;
+        res->setNext(this->head);
+        this->head->setPrev(res);
     }
     this->head = res;
     return res;
@@ -31,5 +27,5 @@ std::ostream& operator << (std::ostream& out, List<E>& lst)
 
 template < typename E> List<E>::~List()
 {
-    
+    delete this->head;
 }
