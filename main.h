@@ -1,4 +1,5 @@
-#include <iostream>
+#ifndef MAIN
+#define MAIN
 
 #include "general.h"
 #include "edge.h"
@@ -14,3 +15,4 @@ Graph* Kruskal(Graph &graph,Natural& mst_weight,bool sortEdges);
 Graph* Prim(Graph &graph,Natural& mst_weight);
 bool IsBridge(const Graph &graph,Natural u, Natural v);
 
+#endif

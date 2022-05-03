@@ -1,5 +1,7 @@
+#ifndef EDGE
+#define EDGE
+
 #include "general.h"
-#include <iostream>
 
 class Edge
 {
@@ -13,3 +15,5 @@ public:
     int operator<(Edge& other);
     friend std::ostream& operator<< (std::ostream& out, Edge* e);
 };
+
+#endif

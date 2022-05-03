@@ -1,3 +1,6 @@
+#ifndef GRAPH
+#define GRAPH
+
 #include "edge.h"
 #include "list.h"
 
@@ -12,3 +15,5 @@ public:
     Graph(unsigned int vertexCount, unsigned int edgeCount, Edge* edges):vertexCount(vertexCount), edgeCount(edgeCount){}
     ~Graph();
 };
+
+#endif
