@@ -1,14 +1,12 @@
 #include <iostream>
 
+#include "general.h"
 #include "edge.h"
 #include "graph.h"
 
 using std::cout;
 
 #define FILE_ARG 1
-
-
-typedef unsigned int Natural;
 
 bool validArgs(int argc, char** argv);
 bool validFile(char* fileName,Natural& n,Natural& m,Edge*& edges,Natural& u, Natural &v);

@@ -1,12 +1,13 @@
-
+#include "general.h"
 
 class Edge
 {
 private:
-    unsigned int source;
-    unsigned int dest;
+    Natural source;
+    Natural dest;
     int weight;
 public:
-    Edge();
+    Edge(Natural source,Natural dest,int weight);
     ~Edge();
+    int operator<(Edge& other);
 };
