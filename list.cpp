@@ -1,18 +1,21 @@
 #include "list.h"
 
-template class List<Edge>;
+template class List<int>;
 
-template <typename E> void List<E>::addData(E data)
+/* template <typename E>
+Node<E>* List<E>::addData(E& data, Node<E>* brotherNode)
 {
-    Node<E> *first = new Node<E>;
-    first->data = data;
-    if(head)
-    {    
-        first->next = head;
-    }
-    else
-    {
-        first->next = nullptr;
-    }
-    this->head = first;
+    return nullptr;
+} */
+
+/* template <typename E>
+std::ostream& operator << (std::ostream& out, List<E>& lst)
+{
+    return out;
 }
+
+template <typename E>
+std::ostream& operator << (std::ostream& out, Node<E>& node)
+{
+    return out;
+} */

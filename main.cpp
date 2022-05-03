@@ -4,6 +4,7 @@ int main(int argc, char* argv[])
 {
     Natural n,m,u,v;
     Edge *edges=nullptr;
+    
     if( validArgs(argc,argv)  &&  validFile(argv[FILE_ARG], n, m, edges, u, v) )
     {
         Natural mst_weight=0;
