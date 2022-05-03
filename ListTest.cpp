@@ -1,7 +1,5 @@
 #include <iostream>
 
-#define TYPE int
-
 #include "list.h"
 
 int main()

@@ -2,6 +2,9 @@
 #define NODE
 
 #include <iostream>
+
+//#include "edge.h"
+
 template <typename E> class Node;
 template <typename E> std::ostream& operator<< (std::ostream& out, Node<E>& node);
 

@@ -1,7 +1,5 @@
 #include <iostream>
 
-#define TYPE int
-
 #include "Node.h"
 
 int main()
