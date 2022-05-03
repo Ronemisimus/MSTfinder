@@ -12,7 +12,7 @@ int main()
 
     test.brotherNode = nullptr;
     test.data = data[0];
-    test.next =nullptr;
+    test.next = nullptr;
     test.prev = nullptr;
 
     std::cout << test << '\n';

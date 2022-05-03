@@ -1,21 +1,35 @@
 #include "list.h"
 
-template class List<int>;
 
-/* template <typename E>
-Node<E>* List<E>::addData(E& data, Node<E>* brotherNode)
-{
-    return nullptr;
-} */
+#define TYPE int
 
-/* template <typename E>
-std::ostream& operator << (std::ostream& out, List<E>& lst)
-{
-    return out;
-}
+template class List<TYPE>;
+template std::ostream& operator<< (std::ostream& out, List<TYPE>& list);
 
 template <typename E>
-std::ostream& operator << (std::ostream& out, Node<E>& node)
+Node<E>* List<E>::addData(E& data, Node<E>* brotherNode)
 {
-    return out;
-} */
+    Node<E>* res = new Node<E>;
+    res->data=data;
+    res->brotherNode = brotherNode;
+    res->next = nullptr;
+    res->prev = nullptr;
+    if(this->head)
+    {
+        res->next = this->head;
+        this->head->prev = res;
+    }
+    this->head = res;
+    return res;
+} 
+
+template <typename E>
+std::ostream& operator << (std::ostream& out, List<E>& lst)
+{
+    return out<<(*lst.head);
+}
+
+template < typename E> List<E>::~List()
+{
+    
+}

@@ -1,9 +1,12 @@
+#ifndef LIST
+#define LIST
+
 #include <iostream>
 
 #include "Node.h"
 
 template <class E> class List;
-//template <class E> std::ostream& operator << (std::ostream& out, List<E>& lst);
+template <class E> std::ostream& operator << (std::ostream& out, List<E>& lst);
 
 template <typename E>
 class List
@@ -11,8 +14,10 @@ class List
 private:
     Node<E> *head;
 public:
-    List(/* args */);
+    List():head(nullptr){}
     ~List();
-    //Node<E>* addData(E& data, Node<E>* brotherNode);
-    //friend std::ostream& operator << (std::ostream& out, List<E>& lst);
+    Node<E>* addData(E& data, Node<E>* brotherNode);
+    friend std::ostream& operator << <E>(std::ostream& out, List<E>& lst);
 };
+
+#endif
