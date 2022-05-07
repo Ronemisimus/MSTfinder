@@ -6,7 +6,7 @@
 #include "edge.h"
 
 template <typename E> class Node;
-template <typename E> std::ostream& operator<< (std::ostream& out, Node<E>& node);
+template <typename E> std::ostream& operator<< (std::ostream& out, Node<E> const& node);
 
 template <typename E> class Node
 {
@@ -22,7 +22,7 @@ template <typename E> class Node
         void setPrev(Node<E>* prev);
         Node(E data, Node<E>* prev, Node<E>* next, Node<E>* brotherNode):data(data), prev(prev), next(next), brotherNode(brotherNode){}
         ~Node();
-        friend std::ostream& operator << <E>(std::ostream& out, Node<E>& node);
+        friend std::ostream& operator << <E>(std::ostream& out, Node<E> const& node);
 };
 
 

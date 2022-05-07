@@ -12,8 +12,13 @@ private:
 public:
     Edge(Natural source,Natural dest,int weight);
     ~Edge();
+
+    Natural getSource();
+    Natural getDest();
+    int getWeight();
+
     int operator<(Edge& other);
-    friend std::ostream& operator<< (std::ostream& out, Edge* e);
+    friend std::ostream& operator<< (std::ostream& out, Edge const& e);
 };
 
 #endif

@@ -16,7 +16,7 @@ private:
 public:
     List():head(nullptr){}
     ~List();
-    Node<E>* addData(E& data, Node<E>* brotherNode);
+    Node<E>* addData(const E& data, Node<E>* brotherNode);
     friend std::ostream& operator << <E>(std::ostream& out, List<E>& lst);
 };
 

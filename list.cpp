@@ -3,11 +3,11 @@
 
 template class List<int>;
 template std::ostream& operator<< (std::ostream& out, List<int>& list);
-template class List<Edge*>;
-template std::ostream& operator<< (std::ostream& out, List<Edge*>& list);
+template class List<Edge&>;
+template std::ostream& operator<< (std::ostream& out, List<Edge&>& list);
 
 template <typename E>
-Node<E>* List<E>::addData(E& data, Node<E>* brotherNode)
+Node<E>* List<E>::addData(const E& data, Node<E>* brotherNode)
 {
     Node<E>* res = new Node<E>(data,nullptr,nullptr,brotherNode);
     if(this->head)

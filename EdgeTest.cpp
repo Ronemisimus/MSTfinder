@@ -3,28 +3,19 @@
 
 int main()
 {
-    Edge* e = new Edge(1,2,3);
-    Edge* e2 = new Edge(1,2,3);
+    Edge e = Edge(1,2,3);
+    Edge e2 = Edge(1,2,3);
 
-    std::cout << e << " compare to " << e2 << " is: " << (*e<*e2) <<"\n";
+    std::cout << e << " compare to " << e2 << " is: " << (e<e2) <<"\n";
 
-    delete e;
-    delete e2;
+    e = Edge(1,2,3);
+    e2 = Edge(1,2,-1);
 
-    e = new Edge(1,2,3);
-    e2 = new Edge(1,2,-1);
+    std::cout << e << " compare to " << e2 << " is: " << (e<e2) <<"\n";
 
-    std::cout << e << " compare to " << e2 << " is: " << (*e<*e2) <<"\n";
+    e = Edge(1,2,-10);
+    e2 = Edge(1,2,3);
 
-    delete e;
-    delete e2;
-
-    e = new Edge(1,2,-10);
-    e2 = new Edge(1,2,3);
-
-    std::cout << e << " compare to " << e2 << " is: " << (*e<*e2) <<"\n";
-
-    delete e;
-    delete e2;
+    std::cout << e << " compare to " << e2 << " is: " << (e<e2) <<"\n";
 
 }

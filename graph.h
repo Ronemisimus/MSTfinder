@@ -1,19 +1,24 @@
 #ifndef GRAPH
 #define GRAPH
 
+#include "general.h"
 #include "edge.h"
 #include "list.h"
+
+#include <sstream>
+#include <string>
 
 class Graph
 {
 private:
-    unsigned int vertexCount;
-    unsigned int edgeCount;
+    Natural vertexCount;
+    Natural edgeCount;
     Edge* edges;
-    List<Edge>* vertexes;
+    List<Edge&>* vertexes;
 public:
-    Graph(unsigned int vertexCount, unsigned int edgeCount, Edge* edges):vertexCount(vertexCount), edgeCount(edgeCount){}
+    Graph(Natural vertexCount, Natural edgeCount, Edge* edges);
     ~Graph();
+    friend std::ostream& operator<<(std::ostream& out, Graph& g);
 };
 
 #endif

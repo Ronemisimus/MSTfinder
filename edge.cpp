@@ -15,8 +15,22 @@ Edge::~Edge()
     
 }
 
-std::ostream& operator<< (std::ostream& out, Edge* e)
+Natural Edge::getSource()
 {
-    if (e) return out << "[ (" << e->source << ", " << e->dest << "):" << e->weight << " ]";
-    else return out << "[ null edge ]";
+    return this->source-1;
+}
+
+Natural Edge::getDest()
+{
+    return this->dest-1;
+}
+
+int Edge::getWeight()
+{
+    return this->weight;
+}
+
+std::ostream& operator<< (std::ostream& out, Edge const& e)
+{
+    return out << "[ (" << e.source << ", " << e.dest << "):" << e.weight << " ]";
 }

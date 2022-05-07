@@ -1,12 +1,12 @@
 #include "Node.h"
 
 template class Node<int>;
-template std::ostream& operator<< (std::ostream& out, Node<int>& node);
-template class Node<Edge*>;
-template std::ostream& operator<< (std::ostream& out, Node<Edge*>& node);
+template std::ostream& operator<< (std::ostream& out, Node<int> const& node);
+template class Node<Edge&>;
+template std::ostream& operator<< (std::ostream& out, Node<Edge&> const& node);
 
 template <typename E>
-std::ostream& operator<< (std::ostream& out, Node<E>& node)
+std::ostream& operator<< (std::ostream& out, Node<E> const& node)
 {
     if(node.next)
     {
