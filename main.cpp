@@ -5,7 +5,9 @@ int main(int argc, char* argv[])
     Natural n,m,u,v;
     Edge *edges=nullptr;
     
-    if( validArgs(argc,argv)  &&  validFile(argv[FILE_ARG], n, m, edges, u, v) )
+    bool file_validation, args_validation;
+
+    if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], n, m, edges, u, v) )
     {
         Natural mst_weight=0;
 
@@ -25,6 +27,10 @@ int main(int argc, char* argv[])
             std::cout << "Kruskal <" << mst_weight << ">" << "\n";
         }
 
+    }
+    else
+    {
+        std::cout << "invalid input\n";
     }
 }
 
@@ -77,5 +83,23 @@ bool validArgs(int argc, char** argv)
     {
         return true;
     }
+    return false;
+}
+
+
+Graph* Kruskal(Graph &graph,Natural& mst_weight,bool sortEdges)
+{
+    return nullptr;
+}
+
+
+Graph* Prim(Graph &graph,Natural& mst_weight)
+{
+    return nullptr;
+}
+
+
+bool IsBridge(const Graph &graph,Natural u, Natural v)
+{
     return false;
 }
