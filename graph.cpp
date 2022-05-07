@@ -1,6 +1,6 @@
 #include "graph.h"
 
-Graph::Graph(Natural vertexCount, Natural edgeCount, Edge* edges):vertexCount(vertexCount), edgeCount(edgeCount)
+Graph::Graph(Natural vertexCount, Natural edgeCount, Edge* edges):vertexCount(vertexCount), edgeCount(edgeCount), edges(edges)
 {
     vertexes = new List<Edge&>[vertexCount];
     Natural current = 0;
@@ -17,7 +17,7 @@ Graph::Graph(Natural vertexCount, Natural edgeCount, Edge* edges):vertexCount(ve
 
 Graph::~Graph()
 {
-    // TODO
+    delete [] this->vertexes;
 }
 
 std::ostream& operator<<(std::ostream& out, Graph& g)
