@@ -10,6 +10,7 @@ private:
     Natural dest;
     int weight;
 public:
+    Edge():source(0),dest(0),weight(0){}
     Edge(Natural source,Natural dest,int weight);
     ~Edge();
 
