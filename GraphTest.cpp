@@ -15,7 +15,7 @@ int main()
 
     std::cout << g;
 
-    List<Natural>* res = g.GetAdjList(1);
+    List<Edge>* res = g.GetAdjList(1);
     std::cout << *res << "\n";
     delete res;
 

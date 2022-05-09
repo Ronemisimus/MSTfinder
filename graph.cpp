@@ -3,6 +3,7 @@
 Graph::Graph():vertexCount(0), edgeCount(0)
 {
     this->vertexes=nullptr;
+    this->sortedEdgeList = List<fullEdge>();
 }
 
 Graph::~Graph()
@@ -48,17 +49,15 @@ bool Graph::IsAdjacent(Natural u, Natural v)
     bool validInput = validVertex(u) && validVertex(v);
     if(vertexes && validInput)
     {
-        List<Natural>* adjlst = this->GetAdjList(u);
+        List<Edge>* adjlst = this->GetAdjList(u);
         
-        for(const auto& adjacent:*adjlst)
+        for(const Edge& adjacent:*adjlst)
         {
-            if(adjacent==v)
+            if(adjacent.getDest()==v)
             {
                 adj = true;
             }
         }
-
-        delete adjlst;
 
     }
 
@@ -66,17 +65,11 @@ bool Graph::IsAdjacent(Natural u, Natural v)
 }
 
 
-List<Natural>* Graph::GetAdjList(Natural u)
+List<Edge>* Graph::GetAdjList(Natural u)
 {
     if(vertexes!=nullptr && validVertex(u))
     {
-        List<Natural>* res = new List<Natural>;
-        for(const Edge& e:vertexes[u-1])
-        {
-            res->addData(e.getDest(),nullptr);
-        }
-
-        return res;
+        return &vertexes[u-1];
     }  
 
     return nullptr;
@@ -120,6 +113,30 @@ bool Graph::RemoveEdge(Natural u, Natural v)
     }
 
     return removed;
+}
+
+
+Natural Graph::getVertexCount()
+{
+    return this->vertexCount;
+}
+
+
+Natural Graph::getEdgeCount()
+{
+    return this->edgeCount;
+}
+
+
+List<fullEdge>& Graph::getSortedEdgeList()
+{
+    return this->sortedEdgeList;
+}
+
+
+void Graph::sortEdgeList()
+{
+    
 }
 
 

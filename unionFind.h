@@ -9,6 +9,7 @@ private:
     Natural *size;
     bool *active;
     Natural itemCount;
+    Natural parentCount;
 
     bool validNode(Natural node);
 

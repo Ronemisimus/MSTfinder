@@ -3,6 +3,23 @@
 
 #include "general.h"
 
+class fullEdge
+{
+    Natural u;
+    Natural v;
+    int weight;
+
+    public:
+    fullEdge();
+    fullEdge(Natural u,Natural v,int weight):u(u),v(v),weight(weight){}
+    void setU(Natural u);
+    void setV(Natural v);
+    void setWeight(int weight);
+    Natural getU() const;
+    Natural getV() const;
+    int getWeight() const;
+};
+
 class Edge
 {
 private:

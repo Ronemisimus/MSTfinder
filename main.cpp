@@ -109,7 +109,33 @@ bool validArgs(int argc, char** argv)
 
 Graph* Kruskal(Graph &graph,Natural& mst_weight,bool sortEdges)
 {
-    return nullptr;
+    Graph* g = new Graph();
+    g->MakeEmptyGraph(graph.getVertexCount());
+    UnionFind uf = UnionFind(graph.getVertexCount());
+    if(sortEdges)
+    {
+        g->sortEdgeList();
+    }
+
+    List<fullEdge>& lst = g->getSortedEdgeList();
+
+    for(Natural i =1; i<=graph.getVertexCount();i++)
+    {
+        uf.MakeSet(i);
+    }
+
+    for(const fullEdge& curr:lst)
+    {
+        Natural uParent = uf.Find(curr.getU());
+        Natural vParent = uf.Find(curr.getV());
+        if(uParent != vParent)
+        {
+            g->AddEdge(curr.getU(),curr.getV(), curr.getWeight());
+            uf.Union(uParent,vParent);
+        }
+    }
+
+    return g;
 }
 
 

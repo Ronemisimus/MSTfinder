@@ -4,6 +4,7 @@
 #include "general.h"
 #include "edge.h"
 #include "graph.h"
+#include "unionFind.h"
 
 #include <filesystem>
 #include <fstream>

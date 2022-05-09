@@ -10,6 +10,7 @@ UnionFind::UnionFind(Natural itemCount)
         this->active[i]=false;
 
     this->itemCount = itemCount;
+    this->parentCount = 0;
 }
 
 UnionFind::~UnionFind()
@@ -53,6 +54,7 @@ void UnionFind::Union(Natural node, Natural node2)
 
             this->parent[child-1] = parent;
             this->size[parent-1] += this->size[child-1];
+            this->parentCount--;
         }
 }
 
@@ -64,6 +66,7 @@ void UnionFind::MakeSet(Natural node)
         this->active[node-1] = true;
         this->size[node-1]=1;
         this->parent[node-1] = node;
+        this->parentCount++;
     }
 }
 
