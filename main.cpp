@@ -4,15 +4,19 @@ int main(int argc, char* argv[])
 {
     
     Natural n,m,u,v;
-    Edge *edges=nullptr;
+    
+    Natural *source = nullptr;
+    Natural *dest = nullptr;
+    int *weight = nullptr;
     
     bool file_validation, args_validation;
 
-    if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], n, m, edges, u, v) )
+    if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], n, m, u, v, source, dest, weight) )
     {
         Natural mst_weight=0;
 
-        Graph graph(n,m,edges);
+        Graph graph = Graph();
+        buildGraph(graph,n,m,source,dest,weight);
         std::cout << graph;
         Graph* kruskal_mst = Kruskal(graph,mst_weight,true);
         std::cout << "Kruskal <" << mst_weight << ">" << "\n";
@@ -33,47 +37,65 @@ int main(int argc, char* argv[])
     else
     {
         std::cout << "invalid input\n";
+        delete [] source;
+        delete [] dest;
+        delete [] weight;
     }
 }
 
+void buildGraph(Graph& g,Natural n,Natural m,Natural*& source,Natural*& dest,int*& weight)
+{
+    Natural current = 0;
+    g.MakeEmptyGraph(n);
+    for(current=0;current<m;current++)
+    {
+        g.AddEdge(source[current],dest[current],weight[current]);
+    }
+    delete [] source;
+    delete [] dest;
+    delete [] weight;
+}
 
-bool validFile(const char* fileName,Natural& n,Natural& m,Edge*& edges,Natural& u, Natural &v)
+bool validFile(const char* fileName,Natural& n,Natural& m,Natural& u, Natural &v,Natural*& source,Natural*& dest,int*& weight)
 {
     std::ifstream input(fileName,std::ios_base::in);
     bool valid = true;
     if(valid = valid&&input.is_open())
     {
-        Natural source, dest, current;
-        double weight;
+        Natural s, d, c, current;
+        double w;
         valid = valid&&input >> n >> m;
 
         valid = valid && n > 0 && m <= n*(n-1)/2; 
 
-        bool* used = new bool[n*m];
-
-        edges = new Edge[m];
-
+        if(valid)
+        { 
+            source = new Natural[m];
+            dest = new Natural[m];
+            weight = new int[m];
+        }
         for(current =0;current<m && valid;current++)
         {
-            valid = valid && input >> source >> dest >> weight;
+            valid = valid && input >> s >> d >> w;
 
-            valid = valid && !used[source*m+dest];
-
-            used[source*m+dest] = used[dest*m+source] = true;
-
-            valid = valid && source >=1 && source <= n && 
-                            dest >=1 && dest <= n &&
-                            source != dest &&
-                            weight == (int)(weight);
-            if (valid) edges[current] = Edge(source,dest,weight);
+            valid = valid && s >=1 && s <= n && 
+                            d >=1 && d <= n &&
+                            s != d &&
+                            w == (int)(w);
+            if (valid)
+            {
+                source[current] = s;
+                dest[current] = d;
+                weight[current] = (int)w;
+            }
         }
 
         valid = valid && current == m;
 
         valid = valid && input >> u >> v;
 
-        valid = valid && u > 1 && u < n &&
-                    v > 1 && v < n;
+        valid = valid && u > 0 && u < n &&
+                    v > 0 && v < n;
 
     }
 

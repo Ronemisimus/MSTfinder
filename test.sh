@@ -7,6 +7,14 @@ valgrind ./ListTest 2> ListTest.res
 g++ edge.cpp EdgeTest.cpp -o EdgeTest
 valgrind ./EdgeTest 2> EdgeTest.res
 
-g++ -g edge.cpp Node.cpp list.cpp graph.cpp GraphTest.cpp -o GraphTest
+g++ edge.cpp Node.cpp list.cpp graph.cpp GraphTest.cpp -o GraphTest
 valgrind ./GraphTest 2> GraphTest.res
 
+g++ Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
+
+valgrind ./mainTest 2> mainTests/mainTest.res 
+
+for f in $(ls -1 tests)
+do
+    valgrind ./mainTest tests/$f 2> mainTests/mainTest$f.res
+done
