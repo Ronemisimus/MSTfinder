@@ -36,7 +36,8 @@ int main(int argc, char* argv[])
 
 void buildGraph(Graph& g,char* fileName)
 {
-    Natural current = 0,n,m, s,d,c;
+    Natural current = 0,n,m, s,d;
+    double weight =0;
 
     std::ifstream input(fileName,std::ios_base::in);
 
@@ -45,8 +46,8 @@ void buildGraph(Graph& g,char* fileName)
     g.MakeEmptyGraph(n);
     for(current=0;current<m;current++)
     {
-        input >> s >> d >> c;
-        g.AddEdge(s,d,c);
+        input >> s >> d >> weight;
+        g.AddEdge(s,d,weight);
     }
 
     input.close();

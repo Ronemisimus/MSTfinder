@@ -18,3 +18,7 @@ for f in $(ls -1 tests)
 do
     valgrind --leak-check=full mainTests/mainTest tests/$f 2> mainTests/mainTest$f.res
 done
+
+g++ heap.cpp heapTest.cpp -o heapTest
+valgrind ./heapTest 2> heapTest.res
+

@@ -85,7 +85,7 @@ List<Natural>* Graph::GetAdjList(Natural u)
 
 void Graph::AddEdge(Natural u, Natural v, int weight)
 {
-    if( validVertex(u) && validVertex(v) && !IsAdjacent(u,v) )
+    if( validVertex(u) && validVertex(v) )
     {
         edgeCount++;
         Edge data(v, weight);

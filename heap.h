@@ -1,12 +1,12 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "general.h"
 
-using std::ostream;
+template<class V,class K> class heap;
+template<class V, class K> std::ostream& operator<<(std::ostream& cout, heap<V,K>& h);
 
-/* template<class T> class heap;
-template<class T> ostream& operator<<(ostream& cout, heap<T>* h);
- */
 template<class V,class K> class heap
 {
 private:
@@ -14,20 +14,21 @@ private:
     K* key_arr; // the key array of the heap
     Natural itemCount;
 
-    int heapifyDown(int node);// fixes down while assuming the rest is correct except this value
-    int heapifyUp(int node);// fixes up while assuming the rest is correct except this heap
-    bool compare(const T* t1, const T* t2);// returns true if t1>t2
-    void remove(int remove);// removes from middle of the heap while fixing it
+    Natural fixHeap(Natural node);// fixes down while assuming the rest is correct except this value
+    Natural heapifyUp(Natural node);// fixes up while assuming the rest is correct except this heap
+    void swap(Natural& place, Natural& newplace);
 
 public:
     heap();
     ~heap();
 
-    void Build(V* values, K* keays, Natural itemCount);
+    void Build(V* values, K* keys, Natural itemCount);
     const V& Top() const;
     const V deleteTop();
     bool isEmpty();
     bool DecreaseKey(Natural place, K newKew);
+
+    friend std::ostream& operator<< <V,K> (std::ostream& cout, heap<V,K>& h);
     
     
 };
