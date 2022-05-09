@@ -4,13 +4,13 @@
 
 int main()
 {
-    List<int> lst1;
-    List<int> lst2;
+    List<Natural> lst1;
+    List<Natural> lst2;
 
-    int data[]= {1,2,3,4,5,6,7};
+    Natural data[]= {1,2,3,4,5,6,7};
 
-    Node<int> *res = lst1.addData(data[0],nullptr);
-    Node<int> *res2 = lst2.addData(data[0],res);
+    Node<Natural> *res = lst1.addData(data[0],nullptr);
+    Node<Natural> *res2 = lst2.addData(data[0],res);
     res->setBrother(res2);
 
     res = lst1.addData(data[1],nullptr);

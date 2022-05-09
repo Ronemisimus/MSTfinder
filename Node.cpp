@@ -1,9 +1,9 @@
 #include "Node.h"
 
-template class Node<int>;
-template std::ostream& operator<< (std::ostream& out, Node<int> const& node);
-template class Node<Edge&>;
-template std::ostream& operator<< (std::ostream& out, Node<Edge&> const& node);
+template class Node<Natural>;
+template std::ostream& operator<< (std::ostream& out, Node<Natural> const& node);
+template class Node<Edge>;
+template std::ostream& operator<< (std::ostream& out, Node<Edge> const& node);
 
 template <typename E>
 std::ostream& operator<< (std::ostream& out, Node<E> const& node)
@@ -38,4 +38,27 @@ template <typename E> void Node<E>::setPrev(Node<E>* prev)
 {
     this->prev = prev;
 }
+
+template <typename E> Node<E>* Node<E>::getNext()
+{
+    return this->next;
+}
+
+
+template <typename E> Node<E>* Node<E>::getPrev()
+{
+    return this->prev;
+}
+
+
+template <typename E> Node<E>* Node<E>::getBrother()
+{
+    return this->brotherNode;
+}
+
+template <typename E> const E& Node<E>::getData() const
+{
+    return this->data;
+}
+        
 

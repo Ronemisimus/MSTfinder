@@ -2,6 +2,7 @@
 
 int main(int argc, char* argv[])
 {
+    
     Natural n,m,u,v;
     Edge *edges=nullptr;
     
@@ -12,6 +13,7 @@ int main(int argc, char* argv[])
         Natural mst_weight=0;
 
         Graph graph(n,m,edges);
+        std::cout << graph;
         Graph* kruskal_mst = Kruskal(graph,mst_weight,true);
         std::cout << "Kruskal <" << mst_weight << ">" << "\n";
         Graph* prim_mst = Prim(graph,mst_weight);
@@ -47,11 +49,17 @@ bool validFile(const char* fileName,Natural& n,Natural& m,Edge*& edges,Natural& 
 
         valid = valid && n > 0 && m <= n*(n-1)/2; 
 
+        bool* used = new bool[n*m];
+
         edges = new Edge[m];
 
         for(current =0;current<m && valid;current++)
         {
             valid = valid && input >> source >> dest >> weight;
+
+            valid = valid && !used[source*m+dest];
+
+            used[source*m+dest] = used[dest*m+source] = true;
 
             valid = valid && source >=1 && source <= n && 
                             dest >=1 && dest <= n &&

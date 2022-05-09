@@ -5,7 +5,7 @@ int Edge::operator<(Edge& other)
     return this->weight-other.weight;
 }
 
-Edge::Edge(Natural source, Natural dest, int weight):source(source),dest(dest), weight(weight)
+Edge::Edge(Natural dest, int weight):dest(dest), weight(weight)
 {
 
 }
@@ -15,22 +15,17 @@ Edge::~Edge()
     
 }
 
-Natural Edge::getSource()
+Natural Edge::getDest() const
 {
-    return this->source-1;
+    return this->dest;
 }
 
-Natural Edge::getDest()
-{
-    return this->dest-1;
-}
-
-int Edge::getWeight()
+int Edge::getWeight() const
 {
     return this->weight;
 }
 
 std::ostream& operator<< (std::ostream& out, Edge const& e)
 {
-    return out << "[ (" << e.source << ", " << e.dest << "):" << e.weight << " ]";
+    return out << "[ " << e.dest << ": " << e.weight << "]";
 }
