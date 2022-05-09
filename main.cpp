@@ -3,20 +3,14 @@
 int main(int argc, char* argv[])
 {
     
-    Natural n,m,u,v;
-    
-    Natural *source = nullptr;
-    Natural *dest = nullptr;
-    int *weight = nullptr;
-    
-    bool file_validation, args_validation;
+    Natural u,v;
 
-    if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], n, m, u, v, source, dest, weight) )
+    if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], u, v) )
     {
         Natural mst_weight=0;
 
         Graph graph = Graph();
-        buildGraph(graph,n,m,source,dest,weight);
+        buildGraph(graph,argv[FILE_ARG]);
         std::cout << graph;
         Graph* kruskal_mst = Kruskal(graph,mst_weight,true);
         std::cout << "Kruskal <" << mst_weight << ">" << "\n";
@@ -37,29 +31,34 @@ int main(int argc, char* argv[])
     else
     {
         std::cout << "invalid input\n";
-        delete [] source;
-        delete [] dest;
-        delete [] weight;
     }
 }
 
-void buildGraph(Graph& g,Natural n,Natural m,Natural*& source,Natural*& dest,int*& weight)
+void buildGraph(Graph& g,char* fileName)
 {
-    Natural current = 0;
+    Natural current = 0,n,m, s,d,c;
+
+    std::ifstream input(fileName,std::ios_base::in);
+
+    input >> n >> m;
+
     g.MakeEmptyGraph(n);
     for(current=0;current<m;current++)
     {
-        g.AddEdge(source[current],dest[current],weight[current]);
+        input >> s >> d >> c;
+        g.AddEdge(s,d,c);
     }
-    delete [] source;
-    delete [] dest;
-    delete [] weight;
+
+    input.close();
 }
 
-bool validFile(const char* fileName,Natural& n,Natural& m,Natural& u, Natural &v,Natural*& source,Natural*& dest,int*& weight)
+bool validFile(const char* fileName,Natural& u, Natural &v)
 {
-    std::ifstream input(fileName,std::ios_base::in);
     bool valid = true;
+    Natural n,m;
+
+    std::ifstream input(fileName,std::ios_base::in);
+    
     if(valid = valid&&input.is_open())
     {
         Natural s, d, c, current;
@@ -68,12 +67,6 @@ bool validFile(const char* fileName,Natural& n,Natural& m,Natural& u, Natural &v
 
         valid = valid && n > 0 && m <= n*(n-1)/2; 
 
-        if(valid)
-        { 
-            source = new Natural[m];
-            dest = new Natural[m];
-            weight = new int[m];
-        }
         for(current =0;current<m && valid;current++)
         {
             valid = valid && input >> s >> d >> w;
@@ -82,13 +75,8 @@ bool validFile(const char* fileName,Natural& n,Natural& m,Natural& u, Natural &v
                             d >=1 && d <= n &&
                             s != d &&
                             w == (int)(w);
-            if (valid)
-            {
-                source[current] = s;
-                dest[current] = d;
-                weight[current] = (int)w;
-            }
         }
+        
 
         valid = valid && current == m;
 
@@ -97,6 +85,7 @@ bool validFile(const char* fileName,Natural& n,Natural& m,Natural& u, Natural &v
         valid = valid && u > 0 && u < n &&
                     v > 0 && v < n;
 
+        input.close();
     }
 
     return valid;

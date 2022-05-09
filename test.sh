@@ -12,9 +12,9 @@ valgrind ./GraphTest 2> GraphTest.res
 
 g++ Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
 
-valgrind ./mainTest 2> mainTests/mainTest.res 
+valgrind mainTests/mainTest 2> mainTests/mainTest.res 
 
 for f in $(ls -1 tests)
 do
-    valgrind ./mainTest tests/$f 2> mainTests/mainTest$f.res
+    valgrind --leak-check=full mainTests/mainTest tests/$f 2> mainTests/mainTest$f.res
 done
