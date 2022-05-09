@@ -22,3 +22,7 @@ done
 g++ heap.cpp heapTest.cpp -o heapTest
 valgrind ./heapTest 2> heapTest.res
 
+g++ unionFind.cpp unionFindTest.cpp -o unionFindTest
+valgrind ./unionFindTest 2> unionFindTest.res
+
+

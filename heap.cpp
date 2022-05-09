@@ -3,6 +3,9 @@
 template class heap<int,int>;
 template std::ostream& operator<< (std::ostream& cout, heap<int,int>& h);
 
+template class heap<Natural,int>;
+template std::ostream& operator<< (std::ostream& cout, heap<Natural,int>& h);
+
 template <class V, class K> heap<V,K>::heap()
 {
     itemCount = 0;
