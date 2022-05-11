@@ -7,60 +7,22 @@ int main(int argc, char* argv[])
 
     if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], u, v) )
     {
-        Natural mst_weight=0, parent_number=0;
 
         Graph graph = Graph();
         buildGraph(graph,argv[FILE_ARG]);
-        std::cout << graph; // temporary
         
-        Graph* kruskal_mst = Kruskal(graph,mst_weight, parent_number, true);
+        runKruskal(graph,true);
         
-        std::cout << *kruskal_mst << '\n'; // temporary
+        runPrim(graph);
         
-        if(parent_number == 1)
-        {
-            std::cout << "Kruskal <" << mst_weight << ">" << "\n";
-        }
-        else
-        {
-            std::cout << "Kruskal <" << "No MST" << ">" << "\n";
-        }
-        delete kruskal_mst;
-        
-        mst_weight = 0;
-        bool connectedGraph = true;
-        Graph* prim_mst = Prim(graph,mst_weight,connectedGraph);
 
-        std::cout << *prim_mst << '\n'; // temporary
-
-        if(connectedGraph)
-        {
-            std::cout << "Prim <" << mst_weight << ">" << "\n";
-        }
-        else
-        {
-            std::cout << "Prim <" << "No MST" << ">" << "\n";
-        }
-        delete prim_mst;
-        
         if(IsBridge(graph, u, v))
         {
             std::cout << "Kruskal <" << "No MST" << ">" << "\n";
         }
         else
         {
-            mst_weight = 0;
-            kruskal_mst = Kruskal(graph,mst_weight, parent_number, false);
-
-            if(parent_number == 1)
-            {
-                std::cout << "Kruskal <" << mst_weight << ">" << "\n";
-            }
-            else
-            {
-                std::cout << "Kruskal <" << "No MST" << ">" << "\n";
-            }
-            delete kruskal_mst;
+            runKruskal(graph,false);
         }
 
     }
@@ -69,6 +31,41 @@ int main(int argc, char* argv[])
         std::cout << "invalid input\n";
     }
 }
+
+
+
+void runKruskal(Graph& g, bool sort)
+{
+    Natural mst_weight = 0, parentNumber=0;
+    Graph* kruskal_mst = Kruskal(g,mst_weight, parentNumber, sort);
+    if(parentNumber == 1)
+    {
+        std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+    }
+    else
+    {
+        std::cout << "Kruskal <" << "No MST" << ">" << "\n";
+    }
+    delete kruskal_mst;
+}
+
+
+void runPrim(Graph& g)
+{
+    Natural mst_weight = 0;
+    bool connectedGraph = true;
+    Graph* prim_mst = Prim(g,mst_weight,connectedGraph);
+    if(connectedGraph)
+    {
+        std::cout << "Prim <" << mst_weight << ">" << "\n";
+    }
+    else
+    {
+        std::cout << "Prim <" << "No MST" << ">" << "\n";
+    }
+    delete prim_mst;
+}
+
 
 void buildGraph(Graph& g,char* fileName)
 {
@@ -88,6 +85,7 @@ void buildGraph(Graph& g,char* fileName)
 
     input.close();
 }
+
 
 bool validFile(const char* fileName,Natural& u, Natural &v)
 {
@@ -184,6 +182,7 @@ Natural hash(Natural& vertex, Natural attempt)
     return vertex-1;
 }
 
+
 Graph* Prim(Graph &graph,Natural& mst_weight, bool& connectedGraph)
 {
     Graph *res = new Graph();
@@ -262,3 +261,4 @@ bool IsBridge(const Graph &graph,Natural u, Natural v)
 {
     return false;
 }
+
