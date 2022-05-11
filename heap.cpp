@@ -6,7 +6,7 @@ template std::ostream& operator<< (std::ostream& cout, heap<int,int>& h);
 template class heap<Natural,int>;
 template std::ostream& operator<< (std::ostream& cout, heap<Natural,int>& h);
 
-template <class V, class K> heap<V,K>::heap()
+template <class V, class K> heap<V,K>::heap(Natural (*hash)(V& key,Natural attempt)):currentPlace(HashMap<V,Natural>(hash))
 {
     itemCount = 0;
     value_arr = nullptr;
@@ -16,7 +16,8 @@ template <class V, class K> heap<V,K>::heap()
 
 template <class V, class K> heap<V,K>::~heap()
 {
-    
+    delete [] value_arr;
+    delete [] key_arr;
 }
 
 
@@ -28,6 +29,10 @@ template <class V, class K> void heap<V,K>::swap(Natural& place, Natural& newpla
     value_arr[place] = value_arr[newplace];
     key_arr[newplace] = temp;
     value_arr[newplace] = v_temp;
+    // update map
+    currentPlace[value_arr[place]] = place;
+    currentPlace[value_arr[newplace]] = newplace;
+
 }
 
 template <class V, class K> Natural heap<V,K>::fixHeap(Natural node)
@@ -36,8 +41,10 @@ template <class V, class K> Natural heap<V,K>::fixHeap(Natural node)
     if(node<itemCount/2)
     {
         Natural son = 2*node+1, son2 = 2*node+2;
-        K min = key_arr[son] < key_arr[son2]? key_arr[son]: key_arr[son2];
-        Natural minIndex = min==key_arr[son2]? son2:son;
+        K min;
+        if(son2<itemCount) min = key_arr[son] < key_arr[son2]? key_arr[son]: key_arr[son2];
+        else min = key_arr[son];
+        Natural minIndex = min==key_arr[son]? son:son2;
         
         if(min<key_arr[node])
         {
@@ -70,9 +77,17 @@ template <class V, class K> Natural heap<V,K>::heapifyUp(Natural node)
 
 template <class V, class K> void heap<V,K>::Build(V* values, K* keys, Natural itemCount)
 {
+    this->currentPlace.MakeEmpty(itemCount);
     this->itemCount = itemCount;
-    value_arr = values;
-    key_arr = keys;
+    value_arr = new V[itemCount];
+    key_arr = new K[itemCount];
+
+    for(Natural i=0;i<itemCount;i++)
+    {
+        value_arr[i] = values[i];
+        key_arr[i] = keys[i];
+        currentPlace[values[i]] = i;
+    }
 
     for(Natural i=itemCount/2-1;i>0;i--)
     {
@@ -91,12 +106,12 @@ template <class V, class K> const V& heap<V,K>::Top() const
 template <class V, class K> const V heap<V,K>::deleteTop()
 {
     const V ans  = value_arr[0];
+    Natural place = 0;
+    Natural place2 = itemCount-1;
+    swap(place, place2);
 
-    value_arr[0] = value_arr[itemCount-1];
-    key_arr[0] = key_arr[itemCount-1];
-
-    fixHeap(0);
     itemCount--;
+    fixHeap(0);
     return ans;
 }
 
@@ -107,8 +122,9 @@ template <class V, class K> bool heap<V,K>::isEmpty()
 }
 
 
-template <class V, class K> bool heap<V,K>::DecreaseKey(Natural place, K newKew)
+template <class V, class K> Natural heap<V,K>::DecreaseKey(V value, K newKew)
 {
+    Natural place = currentPlace[value];
     this->key_arr[place] = newKew;
 
     Natural newPlace = fixHeap(place);
