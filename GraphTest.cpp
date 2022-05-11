@@ -17,7 +17,6 @@ int main()
 
     List<Edge>* res = g.GetAdjList(1);
     std::cout << *res << "\n";
-    delete res;
 
     std::cout << "1 and 2 adjacent status: " << g.IsAdjacent(1,2) << '\n';
 

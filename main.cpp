@@ -7,24 +7,49 @@ int main(int argc, char* argv[])
 
     if ( validArgs(argc,argv) && validFile(argv[FILE_ARG], u, v) )
     {
-        Natural mst_weight=0;
+        Natural mst_weight=0, parent_number=0;
 
         Graph graph = Graph();
         buildGraph(graph,argv[FILE_ARG]);
-        std::cout << graph;
-        Graph* kruskal_mst = Kruskal(graph,mst_weight,true);
-        std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+        std::cout << graph; // temporary
+        
+        Graph* kruskal_mst = Kruskal(graph,mst_weight, parent_number, true);
+        
+        std::cout << *kruskal_mst << '\n'; // temporary
+        
+        if(parent_number == 1)
+        {
+            std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+        }
+        else
+        {
+            std::cout << "Kruskal <" << "No MST" << ">" << "\n";
+        }
+        delete kruskal_mst;
+        
+        mst_weight = 0;
         Graph* prim_mst = Prim(graph,mst_weight);
+        
         std::cout << "Prim <" << mst_weight << ">" << "\n";
+        
         if(IsBridge(graph, u, v))
         {
             std::cout << "Kruskal <" << "No MST" << ">" << "\n";
         }
         else
         {
+            mst_weight = 0;
+            kruskal_mst = Kruskal(graph,mst_weight, parent_number, false);
+
+            if(parent_number == 1)
+            {
+                std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+            }
+            else
+            {
+                std::cout << "Kruskal <" << "No MST" << ">" << "\n";
+            }
             delete kruskal_mst;
-            kruskal_mst = Kruskal(graph,mst_weight,false);
-            std::cout << "Kruskal <" << mst_weight << ">" << "\n";
         }
 
     }
@@ -107,35 +132,39 @@ bool validArgs(int argc, char** argv)
 }
 
 
-Graph* Kruskal(Graph &graph,Natural& mst_weight,bool sortEdges)
+Graph* Kruskal(Graph &graph,Natural& mst_weight, Natural& parentNumber, bool sortEdges)
 {
-    Graph* g = new Graph();
-    g->MakeEmptyGraph(graph.getVertexCount());
+    Graph* res = new Graph();
+    res->MakeEmptyGraph(graph.getVertexCount());
     UnionFind uf = UnionFind(graph.getVertexCount());
     if(sortEdges)
     {
-        g->sortEdgeList();
+        graph.sortEdgeList();
     }
 
-    List<fullEdge>& lst = g->getSortedEdgeList();
+    fullEdge* lst = graph.getSortedEdgeList();
 
-    for(Natural i =1; i<=graph.getVertexCount();i++)
+    Natural i=0;
+    for(i =1; i<=graph.getVertexCount();i++)
     {
         uf.MakeSet(i);
     }
 
-    for(const fullEdge& curr:lst)
+    for(i=0;i<graph.getEdgeCount();i++)
     {
+        fullEdge& curr = lst[i];
         Natural uParent = uf.Find(curr.getU());
         Natural vParent = uf.Find(curr.getV());
         if(uParent != vParent)
         {
-            g->AddEdge(curr.getU(),curr.getV(), curr.getWeight());
+            res->AddEdge(curr.getU(),curr.getV(), curr.getWeight());
+            mst_weight += curr.getWeight();
             uf.Union(uParent,vParent);
         }
     }
 
-    return g;
+    parentNumber = uf.getParentCount();
+    return res;
 }
 
 

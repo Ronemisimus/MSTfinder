@@ -3,12 +3,13 @@
 Graph::Graph():vertexCount(0), edgeCount(0)
 {
     this->vertexes=nullptr;
-    this->sortedEdgeList = List<fullEdge>();
+    this->sortedEdgeList = nullptr;
 }
 
 Graph::~Graph()
 {
     delete [] this->vertexes;
+    if(this->sortedEdgeList) delete [] this->sortedEdgeList;
 }
 
 std::ostream& operator<<(std::ostream& out, Graph& g)
@@ -34,9 +35,11 @@ void Graph::MakeEmptyGraph(Natural n)
     if(vertexCount!=0)
     {
         if(vertexes!=nullptr) delete [] vertexes;
+        if(sortedEdgeList!=nullptr) delete [] sortedEdgeList;
     }
 
     vertexes = new List<Edge>[n];
+    this->sortedEdgeList = nullptr;
 
     this->vertexCount = n;
     this->edgeCount = 0;
@@ -128,15 +131,81 @@ Natural Graph::getEdgeCount()
 }
 
 
-List<fullEdge>& Graph::getSortedEdgeList()
+fullEdge* Graph::getSortedEdgeList()
 {
     return this->sortedEdgeList;
 }
 
 
+int compareEdge(const void* a, const void* b)
+{
+    const fullEdge* e1 = (const fullEdge*) a;
+    const fullEdge* e2 = (const fullEdge*) b;
+
+    return *e1 < *e2;
+
+}
+
 void Graph::sortEdgeList()
 {
-    
+    sortedEdgeList = new fullEdge[edgeCount];
+
+    Natural vertex = 0, edgeIndex=0;
+    Node<Edge> *current = nullptr;
+
+    for(vertex=0;vertex<vertexCount;vertex++)
+    {
+        auto iter = vertexes[vertex].start();
+        for(iter;!iter.isEnd();++iter)
+        {
+            current =  *iter;
+
+            if(!current->getData().getMarked())
+            {
+                markEdge(current);
+                Edge& e = current->getData();
+                sortedEdgeList[edgeIndex] = fullEdge(vertex+1,e.getDest(),e.getWeight());
+                edgeIndex ++;
+            }
+        }
+    }
+
+    unMarkAllEdges();
+
+    qsort(sortedEdgeList,edgeCount, sizeof(fullEdge),compareEdge);
+
+}
+
+
+void Graph::unMarkAllEdges()
+{
+    Natural vertex = 0, edgeIndex=0;
+    Node<Edge> *current = nullptr;
+
+    for(vertex=0;vertex<vertexCount;vertex++)
+    {
+        auto iter = vertexes[vertex].start();
+        for(iter;!iter.isEnd();++iter)
+        {
+            current =  *iter;
+
+            current->getData().unMarkEdge();
+        }
+    }
+}
+
+
+void Graph::markEdge(Node<Edge>* edge)
+{
+    if(edge)
+    {
+        edge->getData().markEdge();
+
+        if(edge->getBrother())
+        {
+            edge->getBrother()->getData().markEdge();
+        }
+    }
 }
 
 

@@ -21,7 +21,7 @@ template <typename E> class Node
         void setNext(Node<E>* next);
         void setPrev(Node<E>* prev);
         
-        const E& getData() const;
+        E& getData();
         Node<E>* getNext();
         Node<E>* getPrev();
         Node<E>* getBrother();

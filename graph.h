@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include <string>
+#include <stdlib.h>
 
 class Graph
 {
@@ -14,7 +15,9 @@ private:
     Natural vertexCount;
     Natural edgeCount;
     List<Edge>* vertexes;
-    List<fullEdge> sortedEdgeList;
+    fullEdge* sortedEdgeList;
+
+    static void markEdge(Node<Edge>* edge);
 
 public:
     Graph();
@@ -30,7 +33,9 @@ public:
 
     Natural getVertexCount();
     Natural getEdgeCount();
-    List<fullEdge>& getSortedEdgeList();
+    fullEdge* getSortedEdgeList();
+
+    void unMarkAllEdges();
 
     friend std::ostream& operator<<(std::ostream& out, Graph& g);
 };

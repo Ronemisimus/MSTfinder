@@ -71,3 +71,8 @@ void UnionFind::MakeSet(Natural node)
 }
 
 
+Natural UnionFind::getParentCount() const
+{
+    return this->parentCount;
+}
+

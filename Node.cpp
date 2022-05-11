@@ -56,7 +56,7 @@ template <typename E> Node<E>* Node<E>::getBrother()
     return this->brotherNode;
 }
 
-template <typename E> const E& Node<E>::getData() const
+template <typename E> E& Node<E>::getData()
 {
     return this->data;
 }

@@ -1,16 +1,16 @@
-g++ edge.cpp Node.cpp NodeTest.cpp -o NodeTest
+g++ -g edge.cpp Node.cpp NodeTest.cpp -o NodeTest
 valgrind ./NodeTest 2> NodeTest.res
 
-g++ edge.cpp Node.cpp list.cpp ListTest.cpp -o ListTest
+g++ -g edge.cpp Node.cpp list.cpp ListTest.cpp -o ListTest
 valgrind ./ListTest 2> ListTest.res
 
-g++ edge.cpp EdgeTest.cpp -o EdgeTest
+g++ -g edge.cpp EdgeTest.cpp -o EdgeTest
 valgrind ./EdgeTest 2> EdgeTest.res
 
-g++ edge.cpp Node.cpp list.cpp graph.cpp GraphTest.cpp -o GraphTest
+g++ -g edge.cpp Node.cpp list.cpp graph.cpp GraphTest.cpp -o GraphTest
 valgrind ./GraphTest 2> GraphTest.res
 
-g++ Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
+g++ -g unionFind.cpp Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
 
 valgrind mainTests/mainTest 2> mainTests/mainTest.res 
 
@@ -19,10 +19,10 @@ do
     valgrind --leak-check=full mainTests/mainTest tests/$f 2> mainTests/mainTest$f.res
 done
 
-g++ heap.cpp heapTest.cpp -o heapTest
+g++ -g heap.cpp heapTest.cpp -o heapTest
 valgrind ./heapTest 2> heapTest.res
 
-g++ unionFind.cpp unionFindTest.cpp -o unionFindTest
+g++ -g unionFind.cpp unionFindTest.cpp -o unionFindTest
 valgrind ./unionFindTest 2> unionFindTest.res
 
 

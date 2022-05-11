@@ -19,4 +19,5 @@ public:
     Natural Find(Natural child);
     void Union(Natural node, Natural node2);
     void MakeSet(Natural node);
+    Natural getParentCount() const;
 };
