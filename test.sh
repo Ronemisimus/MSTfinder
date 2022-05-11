@@ -19,7 +19,7 @@ valgrind ./unionFindTest 2> unionFindTest.res
 g++ -g hashMap.cpp hashMapTest.cpp -o hashMapTest
 valgrind ./hashMapTest 2> hashMapTest.res
 
-g++ -g unionFind.cpp heap.cpp Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
+g++ -g hashMap.cpp unionFind.cpp heap.cpp Node.cpp edge.cpp graph.cpp list.cpp main.cpp -o mainTests/mainTest
 valgrind mainTests/mainTest 2> mainTests/mainTest.res 
 
 for f in $(ls -1 tests)

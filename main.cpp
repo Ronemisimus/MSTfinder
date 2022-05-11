@@ -28,7 +28,20 @@ int main(int argc, char* argv[])
         delete kruskal_mst;
         
         mst_weight = 0;
-        Graph* prim_mst = Prim(graph,mst_weight);
+        bool connectedGraph = true;
+        Graph* prim_mst = Prim(graph,mst_weight,connectedGraph);
+
+        std::cout << *prim_mst << '\n'; // temporary
+
+        if(connectedGraph)
+        {
+            std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+        }
+        else
+        {
+            std::cout << "Kruskal <" << "No MST" << ">" << "\n";
+        }
+        delete prim_mst;
         
         std::cout << "Prim <" << mst_weight << ">" << "\n";
         
@@ -168,9 +181,77 @@ Graph* Kruskal(Graph &graph,Natural& mst_weight, Natural& parentNumber, bool sor
 }
 
 
-Graph* Prim(Graph &graph,Natural& mst_weight)
+Natural hash(Natural& vertex, Natural attempt)
 {
-    return nullptr;
+    return vertex-1;
+}
+
+Graph* Prim(Graph &graph,Natural& mst_weight, bool& connectedGraph)
+{
+    Graph *res = new Graph();
+    heap<Natural,int> h = heap<Natural,int>(hash);
+
+    bool* inT = new bool[graph.getVertexCount()];
+    int* weights = new int[graph.getVertexCount()];
+    Natural* parents = new Natural[graph.getVertexCount()];
+    Natural* vertexes = new Natural[graph.getVertexCount()];
+
+    // init MST result
+    res->MakeEmptyGraph(graph.getVertexCount());
+
+    // arrays init
+    for(Natural i=1;i<graph.getVertexCount();i++)
+    {
+        vertexes[i] = i+1;
+        inT[i]=false;
+        weights[i] = INT_MAX;
+        parents[i] = 0;
+    }
+    inT[0] = true;
+    vertexes[0] = 1;
+    weights[0] = 0;
+    parents[0] = 0;
+
+    // heap init
+    h.Build(vertexes,weights,graph.getVertexCount());
+
+    while(!h.isEmpty() && connectedGraph)
+    {
+        Natural u = h.deleteTop();
+        Natural v = 0;
+        if(weights[u-1]!=INT_MAX)
+        {
+            inT[u-1] = true;
+            for(const Edge& e:*graph.GetAdjList(u))
+            {
+                v = e.getDest();
+                if(!inT[v-1] && e.getWeight() < weights[v-1])
+                {
+                    weights[v-1] = e.getWeight();
+                    parents[v-1] = u;
+                    h.DecreaseKey(v-1,weights[v-1]);
+                }
+            }
+        }
+        else
+        {
+            connectedGraph = false;
+        }
+    }
+
+    if(connectedGraph)
+    {
+        for(Natural i=0;i<graph.getVertexCount();i++)
+        {
+            if(parents[i]!=0)
+            {
+                res->AddEdge(i+1,parents[i], weights[i]);
+                mst_weight += weights[i];
+            }
+        }
+    }
+
+    return res;
 }
 
 
