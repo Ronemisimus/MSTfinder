@@ -35,15 +35,13 @@ int main(int argc, char* argv[])
 
         if(connectedGraph)
         {
-            std::cout << "Kruskal <" << mst_weight << ">" << "\n";
+            std::cout << "Prim <" << mst_weight << ">" << "\n";
         }
         else
         {
-            std::cout << "Kruskal <" << "No MST" << ">" << "\n";
+            std::cout << "Prim <" << "No MST" << ">" << "\n";
         }
         delete prim_mst;
-        
-        std::cout << "Prim <" << mst_weight << ">" << "\n";
         
         if(IsBridge(graph, u, v))
         {
@@ -229,7 +227,7 @@ Graph* Prim(Graph &graph,Natural& mst_weight, bool& connectedGraph)
                 {
                     weights[v-1] = e.getWeight();
                     parents[v-1] = u;
-                    h.DecreaseKey(v-1,weights[v-1]);
+                    h.DecreaseKey(v,weights[v-1]);
                 }
             }
         }
@@ -250,6 +248,11 @@ Graph* Prim(Graph &graph,Natural& mst_weight, bool& connectedGraph)
             }
         }
     }
+
+    delete [] vertexes;
+    delete [] parents;
+    delete [] weights;
+    delete [] inT;
 
     return res;
 }
