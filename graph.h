@@ -17,23 +17,24 @@ private:
     List<Edge>* vertexes;
     fullEdge* sortedEdgeList;
 
-    static void markEdge(Node<Edge>* edge);
-
 public:
     Graph();
     ~Graph();
     void MakeEmptyGraph(Natural n);
-    bool IsAdjacent(Natural u, Natural v);
-    List<Edge>* GetAdjList(Natural u);
+    bool IsAdjacent(Natural u, Natural v) const;
+    List<Edge>* GetAdjList(Natural u) const;
     void AddEdge(Natural u, Natural v, int weight);
     bool RemoveEdge(Natural u, Natural v);
-    bool validVertex(Natural u);
+    bool validVertex(Natural u) const;
+
+    static void markEdge(Node<Edge>* edge);
 
     void sortEdgeList();
 
-    Natural getVertexCount();
-    Natural getEdgeCount();
+    Natural getVertexCount() const;
+    Natural getEdgeCount() const;
     fullEdge* getSortedEdgeList();
+    Node<Edge>* getEdge(Natural u, Natural v) const;
 
     void unMarkAllEdges();
 

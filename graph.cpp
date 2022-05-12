@@ -24,7 +24,7 @@ std::ostream& operator<<(std::ostream& out, Graph& g)
 }
 
 
-bool Graph::validVertex(Natural u)
+bool Graph::validVertex(Natural u) const
 {
     return u>0 && u<=vertexCount;
 }
@@ -46,7 +46,7 @@ void Graph::MakeEmptyGraph(Natural n)
 }
 
 
-bool Graph::IsAdjacent(Natural u, Natural v)
+bool Graph::IsAdjacent(Natural u, Natural v) const
 {
     bool adj = false;
     bool validInput = validVertex(u) && validVertex(v);
@@ -68,7 +68,24 @@ bool Graph::IsAdjacent(Natural u, Natural v)
 }
 
 
-List<Edge>* Graph::GetAdjList(Natural u)
+Node<Edge>* Graph::getEdge(Natural u, Natural v) const
+{
+    Node<Edge>* res = nullptr;
+    auto iter = vertexes[u-1].start();
+    for(iter;!iter.isEnd();++iter)
+    {
+        Node<Edge>* curr = *iter;
+        if(curr->getData().getDest()==v)
+        {
+            res = curr;
+        }
+    }
+
+    return res;
+}
+
+
+List<Edge>* Graph::GetAdjList(Natural u) const
 {
     if(vertexes!=nullptr && validVertex(u))
     {
@@ -111,6 +128,28 @@ bool Graph::RemoveEdge(Natural u, Natural v)
 
         removed = vertexes[u-1].removeNode(res) && vertexes[v-1].removeNode(bro);
 
+        if(sortedEdgeList)
+        {
+            Natural found = edgeCount;
+            for (Natural i = 0; i < edgeCount; i++)
+            {
+                if(found==edgeCount)
+                {
+                    fullEdge* current = &sortedEdgeList[i];
+                    if(current->getU()==u && current->getV() == v)
+                    {
+                        found = i;
+                    }   
+                }
+                if(found!=edgeCount && i<edgeCount-1)
+                {
+                    sortedEdgeList[i] = sortedEdgeList[i+1];
+                }
+            }
+        }
+
+        edgeCount--;
+
         delete res;
         delete bro;        
     }
@@ -119,13 +158,13 @@ bool Graph::RemoveEdge(Natural u, Natural v)
 }
 
 
-Natural Graph::getVertexCount()
+Natural Graph::getVertexCount() const
 {
     return this->vertexCount;
 }
 
 
-Natural Graph::getEdgeCount()
+Natural Graph::getEdgeCount() const
 {
     return this->edgeCount;
 }

@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
         }
         else
         {
+            graph.RemoveEdge(u,v);
             runKruskal(graph,false);
         }
 
@@ -259,6 +260,48 @@ Graph* Prim(Graph &graph,Natural& mst_weight, bool& connectedGraph)
 
 bool IsBridge(const Graph &graph,Natural u, Natural v)
 {
-    return false;
+
+    bool bridge = false;
+    if(graph.IsAdjacent(u,v))
+    {
+        Node<Edge>* res = graph.getEdge(u,v);
+        Graph::markEdge(res);
+        bridge = dfsConnected(graph, u, v);
+    }
+    return bridge;
+}
+
+
+bool dfsConnected(const Graph& g, Natural u, Natural v)
+{
+    bool res = false;
+    Color* color = new Color[g.getVertexCount()];
+    for(Natural i=0;i<g.getVertexCount();i++)
+    {
+        color[i]= Color::WHITE;
+    }
+    visit(g,u,color);
+    if(color[v-1]==Color::WHITE) // v is unreachable from u without (u,v)
+    {
+        res = true;
+    }
+
+    delete [] color;
+    return res;
+}
+
+
+void visit(const Graph& g, Natural u, Color* color)
+{
+    color[u-1] = Color::GRAY;
+    for(const Edge& e:*g.GetAdjList(u))
+    {
+        Natural v = e.getDest();
+        if(color[v-1]==Color::WHITE && !e.getMarked())
+        {
+            visit(g,v,color);
+        }
+    }
+    color[u-1] = Color::BLACK;
 }
 
