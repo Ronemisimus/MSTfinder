@@ -128,6 +128,12 @@ bool Graph::RemoveEdge(Natural u, Natural v)
 
         removed = vertexes[u-1].removeNode(res) && vertexes[v-1].removeNode(bro);
 
+        res->setNext(nullptr);
+        res->setPrev(nullptr);
+
+        bro->setNext(nullptr);
+        bro->setPrev(nullptr);
+
         if(sortedEdgeList)
         {
             Natural found = edgeCount;
