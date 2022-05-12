@@ -15,6 +15,7 @@ class List
 private:
     Node<E> *head;
 
+    // a constent iterator over Edges. no changes allowed here
     class CIterator
     {
         private:
@@ -28,6 +29,7 @@ private:
             bool operator!=(CIterator other) const;
     };
 
+    // a node iterator allowing to edit nodes
     class Iterator
     {
         private:

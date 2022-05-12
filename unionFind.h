@@ -11,7 +11,7 @@ private:
     Natural itemCount;
     Natural parentCount;
 
-    bool validNode(Natural node);
+    bool validNode(Natural node) const;
 
 public:
     UnionFind(Natural size);

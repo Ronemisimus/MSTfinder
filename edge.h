@@ -3,6 +3,7 @@
 
 #include "general.h"
 
+// this is a full undirected edge
 class fullEdge
 {
     Natural u;
@@ -21,6 +22,7 @@ class fullEdge
     int operator<(const fullEdge& other) const;
 };
 
+// this is a directed edge
 class Edge
 {
 private:
